@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "toastmaster-events-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/toastmasterEvents/ToastmasterEventsWebPart.js",
+          "manifest": "./src/webparts/toastmasterEvents/ToastmasterEventsWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "ToastmasterEventsWebPartStrings": "lib/webparts/toastmasterEvents/loc/{locale}.js"
+  }
+}
