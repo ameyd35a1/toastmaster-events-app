@@ -10,6 +10,8 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'ToastmasterEventsWebPartStrings';
 import ToastmasterEvents from './components/ToastmasterEvents';
 import { IToastmasterEventsProps } from './components/IToastmasterEventsProps';
+import { initializeIcons } from 'office-ui-fabric-react';
+import AppContext from '../../common/AppContext';
 
 export interface IToastmasterEventsWebPartProps {
   description: string;
@@ -18,11 +20,17 @@ export interface IToastmasterEventsWebPartProps {
 export default class ToastmasterEventsWebPart extends BaseClientSideWebPart<IToastmasterEventsWebPartProps> {
 
   public render(): void {
-    const element: React.ReactElement<IToastmasterEventsProps> = React.createElement(
-      ToastmasterEvents,
+    initializeIcons();
+    const element: React.ReactElement = React.createElement(
+      AppContext.Provider,
       {
-        description: this.properties.description
-      }
+        value: this.context
+      },
+      React.createElement(
+        ToastmasterEvents,
+        {
+          description: this.properties.description
+        })
     );
 
     ReactDom.render(element, this.domElement);

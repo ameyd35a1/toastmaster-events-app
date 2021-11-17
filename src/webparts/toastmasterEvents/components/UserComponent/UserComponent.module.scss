@@ -1,0 +1,141 @@
+.userComponent {
+
+  position: relative;
+  padding: 5px;
+
+  .winner {
+    position: absolute;
+    right: 15px;
+    transform: rotate(45deg);
+    top: -15px;
+    z-index: 10;
+
+    .crown {
+      font-size: 3rem;
+      color: #FFD700;
+    }
+
+  }
+
+  .profile {
+    text-align: center;
+    //height: 80px;
+    padding-top: 10px;
+
+    .profilePic {
+      --border-width: 4px;
+      display: inline-block;
+      position: relative;
+      height: 110px;
+
+      .profilePicImg {
+        height: 110px;
+        width: 110px;
+        border: 2px solid #60d624;
+        border-radius: var(--border-width);
+        z-index: 2;
+        position: relative;
+      }
+    }
+
+    .profileBorderWinner {
+      .profilePicImg {
+        border: #FFD700;
+        // animation: spin 5s linear infinite;       
+      }
+
+      &::after {
+        position: absolute;
+        content: "";
+        top: calc(-1 * var(--border-width));
+        left: calc(-1 * var(--border-width));
+        z-index: 1;
+        width: calc(100% + var(--border-width) * 2);
+        height: calc(100% + var(--border-width) * 2);
+
+        background: linear-gradient(60deg,
+            #ffd700,
+            #fffbe6,
+            #fff099,
+            #ffd700,
+            #f5d000,
+            #e0bf00,
+            #665700);
+        background-size: 300% 300%;
+        background-position: 0 50%;
+        border-radius: calc(2 * var(--border-width));
+        animation: moveGradient 3s alternate infinite;
+      }
+    }
+
+    .profileBorderLikes {
+      .profilePicImg {
+        border: #ff3300;
+      }
+
+      &::after {
+        position: absolute;
+        content: "";
+        top: calc(-1 * var(--border-width));
+        left: calc(-1 * var(--border-width));
+        z-index: 1;
+        width: calc(100% + var(--border-width) * 2);
+        height: calc(100% + var(--border-width) * 2);
+
+        background: linear-gradient(60deg,
+            hsl(224, 85%, 66%),
+            hsl(269, 85%, 66%),
+            hsl(314, 85%, 66%),
+            hsl(359, 85%, 66%),
+            hsl(44, 85%, 66%),
+            hsl(89, 85%, 66%),
+            hsl(134, 85%, 66%),
+            hsl(179, 85%, 66%));
+        background-size: 300% 300%;
+        background-position: 0 50%;
+        border-radius: calc(2 * var(--border-width));
+        animation: moveGradient 3s alternate infinite;
+      }
+    }
+
+    .profileName {
+      font-size: 1rem;
+      text-align: center;
+    }
+  }
+
+  .action {
+    text-align: center;    
+
+    .likeIcon {
+      padding-top: 5px;
+      cursor: pointer;
+    }
+
+    .likesCount {
+      padding: 2px;
+      font-size: .8rem;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    color: #FFD700
+  }
+
+  50% {
+    color: #b8860b;
+  }
+
+  100% {
+    color: #FFD700;
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes moveGradient {
+  50% {
+    background-position: 100% 50%;
+  }
+}

@@ -1,0 +1,19 @@
+.mainComponent {
+  margin-top: 30px;
+
+  // .main {
+  //   display: grid;
+  //   grid-template-columns: repeat(3, 1fr);
+  //   gap: 10px;
+  //   grid-auto-rows: minmax(100px, auto);    
+  // }
+  .dropdown {
+    padding-top: 10px;
+    width: 50%;
+    margin: 0 auto 20px;
+  }
+}
+
+#workbenchPageContent {
+  max-width: 1200px;
+}

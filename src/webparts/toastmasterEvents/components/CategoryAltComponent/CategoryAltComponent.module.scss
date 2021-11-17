@@ -1,0 +1,49 @@
+.categoryComponent {
+
+  .enclosure {
+    min-width: 200px;
+    //height: 150px;
+    //border: 2px solid #c2c2c2;
+    border-radius: 10px;
+    //background-color: #22676e;
+    //background: rgba(20, 101, 167, 1);
+    //background: linear-gradient(180deg, rgba(37, 153, 247, 1) 0%, rgba(24, 123, 204, 1) 49%, rgba(20, 101, 167, 1) 100%);
+    background: rgb(1, 97, 136);
+    background: linear-gradient(180deg, rgba(1, 97, 136, 1) 0%, rgba(1, 115, 160, 1) 100%);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    margin-bottom: 10px;
+
+    .title {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .group {
+      border: 2px dashed #60d624;
+      display: flex;
+      margin: 15px 0;
+      min-width: 200 px;
+      border-radius: 10px;
+    }
+  }
+
+  .moreMembers {
+    display: flex;
+    justify-content: space-evenly;
+    width: 750px;
+
+    .link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.8rem;
+    }
+  }
+
+  .gold {
+    background: rgba(247, 170, 45, 1);
+    background: linear-gradient(180deg, rgba(247, 220, 37, 1) 0%, rgba(247, 170, 45, 1) 100%);
+  }
+}
