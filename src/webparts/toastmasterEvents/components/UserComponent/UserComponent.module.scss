@@ -55,8 +55,8 @@
 
         background: linear-gradient(60deg,
             #ffd700,
-            #fffbe6,
-            #fff099,
+            #eb4034,
+            #B76E79,
             #ffd700,
             #f5d000,
             #e0bf00,
@@ -64,7 +64,7 @@
         background-size: 300% 300%;
         background-position: 0 50%;
         border-radius: calc(2 * var(--border-width));
-        animation: moveGradient 3s alternate infinite;
+        animation: moveGradient 5s alternate infinite;
       }
     }
 
@@ -105,7 +105,8 @@
   }
 
   .action {
-    text-align: center;    
+    text-align: center;
+    min-height: 44px;
 
     .likeIcon {
       padding-top: 5px;

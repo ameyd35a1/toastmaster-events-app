@@ -26,10 +26,16 @@ export interface IEventDropdownOption {
 }
 
 export interface IEventLikes {
-    eventDate: Date,
+    likeId?: number,
     category: string,
     member: string,
     loggedInUser: string[]    
+}
+
+export interface IEventLikesData {
+    likes: IEventLikes[],
+    eventDate: Date,
+    updates?: number[],
 }
 
 export interface IEventWinner {

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { getCategoryTitles, getEventData, getEventLikes, getEventsDates, getEventWinner } from '../../../../api';
 import { useWebPartContext } from '../../../../hooks/useWebpartContext';
-import { IEvent, IEventDropdownOption, IEventLikes, IEventWinner } from '../../Interfaces/IEvent';
+import { IEvent, IEventDropdownOption, IEventLikes, IEventLikesData, IEventWinner } from '../../Interfaces/IEvent';
 import EventsComponent from '../EventsComponent/EventsComponent'
 import styles from './MainComponent.module.scss'
 import { Dropdown, IDropdownOption, IDropdownStyles, ISpinnerStyles, Spinner, SpinnerSize } from 'office-ui-fabric-react';
@@ -62,8 +62,8 @@ const MainComponent = () => {
 
         setEvent(eventData);
 
-        const eventLikesData: IEventLikes[] = await getEventLikes(ctx.client, ctx.webUrl, new Date(entry.text))
-        // const data = _.groupBy(eventLikesData, 'member')
+        const eventLikesData: IEventLikesData = await getEventLikes(ctx.client, ctx.webUrl, new Date(entry.text))
+        // const data = _.groupBy(eventLikesData, 'member')        
         setLikes(eventLikesData);
         setEventLoading(false);
     }

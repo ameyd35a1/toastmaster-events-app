@@ -1,6 +1,6 @@
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http'
-import { paddingLeft } from '../utility';
-import { IEvent, IEventDropdownOption, IEventLikes, IEventMember, IEventWinner } from '../webparts/toastmasterEvents/Interfaces/IEvent';
+import { getTitleDate, paddingLeft } from '../utility';
+import { IEvent, IEventDropdownOption, IEventLikes, IEventLikesData, IEventMember, IEventWinner } from '../webparts/toastmasterEvents/Interfaces/IEvent';
 
 
 export const getEventsDates = async (client: SPHttpClient, url: string): Promise<IEventDropdownOption[]> => {
@@ -122,18 +122,63 @@ export const getEventWinner = async (client: SPHttpClient, url: string, eventDat
 }
 
 
-export const getEventLikes = async (client: SPHttpClient, url: string, eventDate: Date): Promise<IEventLikes[]> => {
-    let requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterLikes')/items?$filter=Title eq 'Event_" + (paddingLeft(eventDate.getDate().toString(), "00") + (paddingLeft((eventDate.getMonth() + 1).toString(), "00")) + eventDate.getFullYear()) + "'&$select=Title,Category,Member,LoggedInUser");
+export const getEventLikes = async (client: SPHttpClient, url: string, eventDate: Date): Promise<IEventLikesData> => {
+    let requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterLikes')/items?$filter=Title eq 'Event_" + getTitleDate(eventDate) + "'&$select=Title,Category,Member,LoggedInUser,Id");
     return await client.get(requestUrl, SPHttpClient.configurations.v1)
         .then((response: SPHttpClientResponse) => {
             if (response.ok) {
                 return response.json().then((responseJSON) => {
                     if (responseJSON != null && responseJSON.value != null) {
-                        const likes: IEventLikes[] = responseJSON.value.map(e => { return <IEventLikes>{ member: e.Member, category: e.Category, eventDate: eventDate, loggedInUser: e.LoggedInUser.split(';') } });
-                        return likes;
+                        const likes: IEventLikes[] = responseJSON.value.map(e => { return <IEventLikes>{ member: e.Member, category: e.Category, loggedInUser: e.LoggedInUser.split(';'), likeId: e.Id } });
+                        const likesData: IEventLikesData = { likes: likes, eventDate: eventDate, updates: [] }
+                        return likesData;
                     }
                 })
             }
             return null;
+        })
+}
+
+export const postLikes = async (client: SPHttpClient, url: string, action: string, itemId: number, data: IEventLikes, eventDate: Date): Promise<void> => {
+    let requestUrl = '';
+    let optionHeaders: HeadersInit = null;
+    const body: string = JSON.stringify({
+        'Title': 'Event_' + getTitleDate(eventDate),
+        'Category': data.category,
+        'Member': data.member,
+        'LoggedInUser': data.loggedInUser.join(';')
+    });
+    optionHeaders = {
+        'Accept': 'application/json;odata=nometadata',
+        'Content-type': 'application/json;odata=nometadata',
+        'odata-version': ''
+    }
+
+    if (itemId === -1) {
+        requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterLikes')/items");
+    } else {
+        requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterLikes')/items(" + itemId + ")");
+
+        optionHeaders['IF-MATCH'] = '*'
+        if (action === 'update') {
+            optionHeaders['X-HTTP-Method'] = 'MERGE'
+        } else if (action === 'delete') {
+            optionHeaders['X-HTTP-Method'] = 'DELETE'
+        }
+    }
+
+
+    return await client.post(requestUrl, SPHttpClient.configurations.v1, {
+        headers: optionHeaders,
+        body: body
+    })
+        .then((response: SPHttpClientResponse) => {
+            if (response.ok) {
+                return response.json().then((responseJSON) => {
+                    if (responseJSON != null && responseJSON.value != null) {
+
+                    }
+                })
+            }
         })
 }

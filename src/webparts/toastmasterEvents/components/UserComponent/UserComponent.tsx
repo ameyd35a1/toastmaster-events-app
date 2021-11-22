@@ -4,6 +4,7 @@ import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { IEventMember } from '../../Interfaces/IEvent';
 import { DataContext } from '../../../../common/DataContext';
 import { useWebPartContext } from '../../../../hooks/useWebpartContext';
+import { postLikes } from '../../../../api';
 
 interface IUserComponentProps {
     member: IEventMember,
@@ -14,27 +15,56 @@ const UserComponent: FC<IUserComponentProps> = ({ member, category }) => {
 
     const [like, setLike] = useState<number>(0);
     const [isLiked, setIsLiked] = useState<boolean>(false);
-    const { likes } = useContext(DataContext);
+    const { likes, setLikes } = useContext(DataContext);
 
     const ctx = useWebPartContext(context => ({
+        client: context.spHttpClient,
+        webUrl: context.pageContext.web.absoluteUrl,
         email: context.pageContext.user.email
     }));
 
     const updateLike = () => {
         //setLike('LikeSolid');
+        if (!isLiked) {
+            if (likes.likes && likes.likes.length > 0) {
+                const currentUserLikeDetails = likes.likes.filter(e => e.member.toLowerCase() === member.email.toLowerCase() && e.category === category)
+                if (currentUserLikeDetails && currentUserLikeDetails.length > 0) {
+                    currentUserLikeDetails[0].loggedInUser.push(ctx.email);
+                    likes.updates.push(currentUserLikeDetails[0].likeId);
+                    postLikes(ctx.client, ctx.webUrl, 'update', currentUserLikeDetails[0].likeId, currentUserLikeDetails[0], likes.eventDate);
+                } else {
+                    likes.likes.push({ member: member.email, category: category, loggedInUser: [ctx.email], likeId: -1 });
+                    likes.updates.push(-1)
+                    postLikes(ctx.client, ctx.webUrl, 'update', -1, { member: member.email, category: category, loggedInUser: [ctx.email], likeId: -1 }, likes.eventDate);
+                }
+            }
+        } else {
+            const currentUserLikeDetails = likes.likes.filter(e => e.member.toLowerCase() === member.email.toLowerCase() && e.category === category)
+            if (currentUserLikeDetails && currentUserLikeDetails.length > 0) {
+                currentUserLikeDetails[0].loggedInUser = currentUserLikeDetails[0].loggedInUser.filter(e => e != ctx.email);
+                likes.updates.push(currentUserLikeDetails[0].likeId);
+                postLikes(ctx.client, ctx.webUrl, 'delete', currentUserLikeDetails[0].likeId, currentUserLikeDetails[0], likes.eventDate);
+            } else {
+
+            }
+        }
+        //console.log(likes);
+        setLikes({ likes: likes.likes, updates: likes.updates, eventDate: likes.eventDate });
     }
 
     useEffect(() => {
-        if (likes && likes.length > 0) {
-            const currentUserLikeDetails = likes.filter(e => e.member.toLowerCase() === member.email.toLowerCase() && e.category === category)
+        if (likes.likes && likes.likes.length > 0) {
+            const currentUserLikeDetails = likes.likes.filter(e => e.member.toLowerCase() === member.email.toLowerCase() && e.category === category)
             if (currentUserLikeDetails && currentUserLikeDetails.length > 0) {
                 if (currentUserLikeDetails[0].loggedInUser.indexOf(ctx.email) > -1) {
                     setIsLiked(true);
+                } else {
+                    setIsLiked(false);
                 }
                 setLike(currentUserLikeDetails[0].loggedInUser.length);
             }
         }
-    }, [likes])
+    }, [likes, likes.updates])
 
     return (
         <div className={styles.userComponent}>
@@ -54,7 +84,7 @@ const UserComponent: FC<IUserComponentProps> = ({ member, category }) => {
             <div className={styles.action}>
                 {/* //Actions */}
                 <Icon iconName={isLiked ? "LikeSolid" : "Like"} onClick={updateLike} className={styles.likeIcon} />
-                <div className={styles.likesCount}>{like}</div>
+                {like > 0 && <div className={styles.likesCount}>{like}</div>}
             </div>
         </div>
 
