@@ -10,7 +10,7 @@
     //background: linear-gradient(180deg, rgba(37, 153, 247, 1) 0%, rgba(24, 123, 204, 1) 49%, rgba(20, 101, 167, 1) 100%);
     background: rgb(1, 97, 136);
     background: linear-gradient(180deg, rgba(1, 97, 136, 1) 0%, rgba(1, 115, 160, 1) 100%);
-    
+
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
@@ -22,10 +22,17 @@
     }
   }
 
+  // .moreMembers {
+  //   display: flex;
+  //   justify-content: space-evenly;
+  //   width: 750px;
+  // }
   .moreMembers {
-    display: flex;
-    justify-content: space-evenly;
-    width: 750px;
+    display: grid;
+    /* grid-template-rows: 200px 200px; */
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+    padding: 10px;
   }
 
   .gold {

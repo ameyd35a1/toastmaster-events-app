@@ -26,13 +26,19 @@
       margin: 15px 0;
       min-width: 200 px;
       border-radius: 10px;
+      padding: 5px;
     }
   }
 
   .moreMembers {
-    display: flex;
-    justify-content: space-evenly;
-    width: 750px;
+    // display: flex;
+    // justify-content: space-evenly;
+    // width: 750px;
+    display: grid;
+    /* grid-template-rows: 200px 200px; */
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    padding: 10px;
 
     .link {
       display: flex;

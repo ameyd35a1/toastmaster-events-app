@@ -5,9 +5,9 @@
 
   .winner {
     position: absolute;
-    right: 15px;
+    right: 25px;
     transform: rotate(45deg);
-    top: -15px;
+    top: 0px;
     z-index: 10;
 
     .crown {
@@ -23,13 +23,13 @@
     padding-top: 10px;
 
     .profilePic {
-      --border-width: 4px;
+      --border-width: 5px;
       display: inline-block;
       position: relative;
       height: 110px;
 
       .profilePicImg {
-        height: 110px;
+        max-height: 110px;
         width: 110px;
         border: 2px solid #60d624;
         border-radius: var(--border-width);
@@ -53,7 +53,7 @@
         width: calc(100% + var(--border-width) * 2);
         height: calc(100% + var(--border-width) * 2);
 
-        background: linear-gradient(60deg,
+        background: linear-gradient(90deg,
             #ffd700,
             #eb4034,
             #B76E79,
@@ -107,6 +107,9 @@
   .action {
     text-align: center;
     min-height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .likeIcon {
       padding-top: 5px;

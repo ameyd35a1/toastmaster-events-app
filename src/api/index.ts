@@ -1,6 +1,6 @@
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http'
 import { getTitleDate, paddingLeft } from '../utility';
-import { IEvent, IEventDropdownOption, IEventLikes, IEventLikesData, IEventMember, IEventWinner } from '../webparts/toastmasterEvents/Interfaces/IEvent';
+import { IComment, IEvent, IEventDropdownOption, IEventLikes, IEventLikesData, IEventMember, IEventWinner } from '../webparts/toastmasterEvents/Interfaces/IEvent';
 
 
 export const getEventsDates = async (client: SPHttpClient, url: string): Promise<IEventDropdownOption[]> => {
@@ -22,7 +22,7 @@ export const getEventsDates = async (client: SPHttpClient, url: string): Promise
 
 export const getEventData = async (client: SPHttpClient, url: string, itemId: number): Promise<IEvent> => {
 
-    let requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterEvents')/items?$filter=ID eq " + itemId + "&$select=DateConductedOn,SAA/Title,SAA/Email,SAA/UserTypeCalc,SAA/ProfilePicUrl,TOD/Title,TOD/Email,TOD/UserTypeCalc,TOD/ProfilePicUrl,TTM/Title,TTM/Email,TTM/UserTypeCalc,TTM/ProfilePicUrl,GE/Title,GE/Email,GE/UserTypeCalc,GE/ProfilePicUrl,GMR/Title,GMR/Email,GMR/UserTypeCalc,GMR/ProfilePicUrl,AHC/Title,AHC/Email,AHC/UserTypeCalc,AHC/ProfilePicUrl,TMR/Title,TMR/Email,TMR/UserTypeCalc,TMR/ProfilePicUrl,PPS/Title,PPS/Email,PPS/UserTypeCalc,PPS/ProfilePicUrl,PPE/Title,PPE/Email,PPE/UserTypeCalc,PPE/ProfilePicUrl,TTS/Title,TTS/Email,TTS/UserTypeCalc,TTS/ProfilePicUrl&$expand=SAA,TOD,TTM,GE,GMR,AHC,TMR,PPS,PPE,TTS");
+    let requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterEvents')/items?$filter=ID eq " + itemId + "&$select=DateConductedOn,Comments,SAA/Title,SAA/Email,SAA/UserTypeCalc,SAA/ProfilePicUrl,TOD/Title,TOD/Email,TOD/UserTypeCalc,TOD/ProfilePicUrl,TTM/Title,TTM/Email,TTM/UserTypeCalc,TTM/ProfilePicUrl,GE/Title,GE/Email,GE/UserTypeCalc,GE/ProfilePicUrl,GMR/Title,GMR/Email,GMR/UserTypeCalc,GMR/ProfilePicUrl,AHC/Title,AHC/Email,AHC/UserTypeCalc,AHC/ProfilePicUrl,TMR/Title,TMR/Email,TMR/UserTypeCalc,TMR/ProfilePicUrl,PPS/Title,PPS/Email,PPS/UserTypeCalc,PPS/ProfilePicUrl,PPE/Title,PPE/Email,PPE/UserTypeCalc,PPE/ProfilePicUrl,TTS/Title,TTS/Email,TTS/UserTypeCalc,TTS/ProfilePicUrl&$expand=SAA,TOD,TTM,GE,GMR,AHC,TMR,PPS,PPE,TTS");
     return await client.get(requestUrl, SPHttpClient.configurations.v1)
         .then((response: SPHttpClientResponse) => {
             if (response.ok) {
@@ -31,6 +31,8 @@ export const getEventData = async (client: SPHttpClient, url: string, itemId: nu
                         let item = responseJSON.value[0];
                         let event: IEvent = {
                             dateCreatedOn: item.DateConductedOn,
+                            comments: item.Comments,
+                            id: itemId,
                             SAA: {
                                 name: item.SAA.Title,
                                 email: item.SAA.Email,
@@ -139,7 +141,7 @@ export const getEventLikes = async (client: SPHttpClient, url: string, eventDate
         })
 }
 
-export const postLikes = async (client: SPHttpClient, url: string, action: string, itemId: number, data: IEventLikes, eventDate: Date): Promise<void> => {
+export const postLikes = async (client: SPHttpClient, url: string, action: string, itemId: number, data: IEventLikes, eventDate: Date): Promise<string> => {
     let requestUrl = '';
     let optionHeaders: HeadersInit = null;
     const body: string = JSON.stringify({
@@ -175,10 +177,45 @@ export const postLikes = async (client: SPHttpClient, url: string, action: strin
         .then((response: SPHttpClientResponse) => {
             if (response.ok) {
                 return response.json().then((responseJSON) => {
-                    if (responseJSON != null && responseJSON.value != null) {
-
+                    if (responseJSON != null) {
+                        if (action === 'update') {
+                            return responseJSON.Id
+                        } else {
+                            return ''
+                        }
                     }
                 })
             }
         })
+}
+
+export const postComments = async (client: SPHttpClient, url: string, itemId: number, comment: IComment[]): Promise<string> => {
+    const body: string = JSON.stringify({
+        'Comments': JSON.stringify(comment)
+    });
+
+    let optionHeaders: HeadersInit = {
+        'Accept': 'application/json;odata=nometadata',
+        'Content-type': 'application/json;odata=nometadata',
+        'odata-version': '',
+        'IF-MATCH': '*',
+        'X-HTTP-Method': 'MERGE'
+    }
+
+    const requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterEvents')/items(" + itemId + ")");
+
+    return await client.post(requestUrl, SPHttpClient.configurations.v1, {
+        headers: optionHeaders,
+        body: body
+    })
+        .then((response: SPHttpClientResponse) => {
+            if (response.ok) {
+                return response.json().then((responseJSON) => {
+                    if (responseJSON != null) {
+                        return responseJSON.Id
+                    }
+                })
+            }
+        })
+
 }

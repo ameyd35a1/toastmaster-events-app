@@ -4,9 +4,10 @@ import { useWebPartContext } from '../../../../hooks/useWebpartContext';
 import { IEvent, IEventDropdownOption, IEventLikes, IEventLikesData, IEventWinner } from '../../Interfaces/IEvent';
 import EventsComponent from '../EventsComponent/EventsComponent'
 import styles from './MainComponent.module.scss'
-import { Dropdown, IDropdownOption, IDropdownStyles, ISpinnerStyles, Spinner, SpinnerSize } from 'office-ui-fabric-react';
+import { Dropdown, IDropdownOption, IDropdownStyles, ISpinnerStyles, Separator, Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import _ from '@microsoft/sp-lodash-subset';
 import { DataContext } from '../../../../common/DataContext';
+import CommentsSectionComponent from '../CommentsSectionComponent/CommentsSectionComponent';
 
 const MainComponent = () => {
 
@@ -68,7 +69,7 @@ const MainComponent = () => {
         setEventLoading(false);
     }
 
-    const dropdownStyles: Partial<IDropdownStyles> = {        
+    const dropdownStyles: Partial<IDropdownStyles> = {
         label: { color: "#adff2f" }
     };
 
@@ -89,8 +90,11 @@ const MainComponent = () => {
                     {eventLoading
                         ? <Spinner size={SpinnerSize.large} label="Loading Event Details..." labelPosition="left" styles={spinnerStyle} />
                         : event &&
-                        <EventsComponent event={event} categories={categories} />
-
+                        <div>
+                            <EventsComponent event={event} categories={categories} />
+                            <Separator />
+                            <CommentsSectionComponent data={event.comments} id={event.id} />
+                        </div>
                     }
                 </div>
             }

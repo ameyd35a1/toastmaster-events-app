@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { IEvent } from '../../Interfaces/IEvent'
 import { IButtonStyles, IconButton, IIconProps } from '@fluentui/react'
 import {ReactPhotoCollage} from 'react-photo-collage'
+import config from '../../../../config'
 
 interface ICollageComponentProps {
     content: IEvent,
@@ -12,26 +13,29 @@ const CollageComponent: FC<ICollageComponentProps> = ({ content, handler }) => {
     //const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
     const [isPopup, setisPopup] = useState(true);
     const [setting, setSetting] = useState(null);
+    const defaultProfilePicUrl = config.defaultProfilePicUrl;
     //const titleId = useId('title');
 
     useEffect(() => {
-        let profilePics: string[] = [];
-        profilePics.push(content.AHC.profilePic);
-        profilePics.push(content.GE.profilePic);
-        profilePics.push(content.GMR.profilePic);
-        profilePics.push(content.SAA.profilePic);
-        profilePics.push(content.TMR.profilePic);
-        profilePics.push(content.TOD.profilePic);
-        profilePics.push(content.TTM.profilePic);
-        content.PPE.forEach(e => profilePics.push(e.profilePic));
-        content.PPS.forEach(e => profilePics.push(e.profilePic));
-        content.TTS.forEach(e => profilePics.push(e.profilePic));
+        let profilePics: Set<string> = new Set();
+        profilePics.add(content.SAA.profilePic ? content.SAA.profilePic : defaultProfilePicUrl );
+        profilePics.add(content.TOD.profilePic ? content.TOD.profilePic : defaultProfilePicUrl );
+        profilePics.add(content.TTM.profilePic ? content.TTM.profilePic : defaultProfilePicUrl );
+        profilePics.add(content.GE.profilePic ? content.GE.profilePic : defaultProfilePicUrl );
+        profilePics.add(content.GMR.profilePic ? content.GMR.profilePic : defaultProfilePicUrl );
+        profilePics.add(content.AHC.profilePic ? content.AHC.profilePic : defaultProfilePicUrl );
+        profilePics.add(content.TMR.profilePic ? content.TMR.profilePic : defaultProfilePicUrl );
+        content.PPE.forEach(e => profilePics.add(e.profilePic ? e.profilePic : defaultProfilePicUrl ));
+        content.PPS.forEach(e => profilePics.add(e.profilePic ? e.profilePic : defaultProfilePicUrl ));
+        content.TTS.forEach(e => profilePics.add(e.profilePic ? e.profilePic : defaultProfilePicUrl ));
+
+        const profilePicsArr = Array.from(profilePics.values());
 
         const _setting = {
             width: "1200px",
             height: ["200px", "200px"],
-            layout: [Math.ceil(profilePics.length / 2), Math.ceil(profilePics.length / 2)],
-            photos: profilePics.map(e => { return { 'source': e } }),
+            layout: [Math.ceil(profilePicsArr.length / 2), Math.ceil(profilePicsArr.length / 2)],
+            photos: profilePicsArr.map(e => { return { 'source': e } }),
             showNumOfRemainingPhotos: true
         }
         setSetting(_setting);
@@ -103,7 +107,7 @@ const CollageComponent: FC<ICollageComponentProps> = ({ content, handler }) => {
                 containerClassName={contentStyles.container}
             >
                 <div className={contentStyles.header}>
-                    <span>Collage</span>
+                    <span>Toastmaster Event held on <strong><i>{new Date(content.dateCreatedOn.toString()).toDateString()}</i></strong></span>
                     <IconButton
                         styles={iconButtonStyles}
                         iconProps={cancelIcon}

@@ -1,5 +1,7 @@
 export interface IEvent {
     dateCreatedOn: Date,
+    comments: string,
+    id: number,
     SAA: IEventMember,
     TOD: IEventMember,
     TTM: IEventMember,
@@ -42,4 +44,13 @@ export interface IEventWinner {
     eventDate: Date,
     category: string,
     member: string
+}
+
+export interface IComment {
+    id: number,
+    body: string,
+    userName: string,
+    userId: string,
+    parentId: number,
+    createdAt: string
 }
