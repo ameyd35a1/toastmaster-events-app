@@ -5,6 +5,7 @@ import { decode } from 'html-entities'
 import CommentsComponent from '../CommentsComponent/CommentsComponent'
 import { useWebPartContext } from '../../../../hooks/useWebpartContext'
 import { postComments } from '../../../../api'
+import styles from './CommentsSectionComponent.module.scss'
 
 interface ICommentsSectionComponentProps {
     data: string,
@@ -82,7 +83,7 @@ const CommentsSectionComponent: FC<ICommentsSectionComponentProps> = ({ data, id
         <div>
             {comments &&
                 <Comment.Group threaded>
-                    <Header as='h3' dividing>
+                    <Header as='h3' dividing className={styles.commentHeading}>
                         Comments
                     </Header>
                     <Input

@@ -11,7 +11,9 @@
       ]
     }
   },
-  "externals": {},
+  "externals": {
+    "semantic": "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+  },
   "localizedResources": {
     "ToastmasterEventsWebPartStrings": "lib/webparts/toastmasterEvents/loc/{locale}.js"
   }

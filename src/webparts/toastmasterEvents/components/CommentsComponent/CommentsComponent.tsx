@@ -34,7 +34,7 @@ const CommentsComponent: FC<ICommentsComponentProps> = ({ comment, replies, hand
             </Comment.Content>
             {isReplyParent &&
                 <Form reply>
-                    <Form.TextArea value={reply} onChange={(e) => setReply(e.target.value)} />
+                    <Form.TextArea value={reply} onChange={(e) => setReply(e.target.value)} rows={2} placeholder="Reply..." style={{ height:100 }} />
                     <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={() => { setReply(''); setIsReplyParent(false); return handleReply(reply, comment.id) }} />
                 </Form>
             }

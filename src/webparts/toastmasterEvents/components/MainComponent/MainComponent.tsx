@@ -70,12 +70,12 @@ const MainComponent = () => {
     }
 
     const dropdownStyles: Partial<IDropdownStyles> = {
-        label: { color: "#adff2f" }
+        label: { color: "#460073" }
     };
 
     const spinnerStyle: Partial<ISpinnerStyles> = {
-        circle: { color: "#adff2f" },
-        label: { color: "#adff2f" }
+        circle: { color: "#460073" },
+        label: { color: "#460073" }
     }
 
     return (

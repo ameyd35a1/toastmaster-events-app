@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Button, Comment, Form } from 'semantic-ui-react';
+import { Button, Comment, Form, TextArea } from 'semantic-ui-react';
 import { getFormattedDateTime } from '../../../../utility';
 import { IComment } from '../../Interfaces/IEvent';
 
@@ -29,7 +29,7 @@ const ReplyComponent:FC<IReplyComponentProps> = ({ reply, handleReply }) => {
                 </Comment.Content>
                 {isReply &&
                     <Form reply>
-                        <Form.TextArea value={replyText} onChange={(x) => setReplyText(x.target.value)} />
+                        <TextArea value={replyText} onChange={(x) => setReplyText(x.target.value)} rows={2} placeholder="Reply..." style={{ height:100 }} />
                         <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={() => { setReplyText(''); setIsReply(false); return handleReply(replyText) }} />
                     </Form>
                 }

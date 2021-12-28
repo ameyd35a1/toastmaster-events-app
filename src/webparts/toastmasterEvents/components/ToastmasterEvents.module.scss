@@ -11,7 +11,12 @@
     @include ms-Grid-row;
     @include ms-fontColor-white;
     //background-color: $ms-color-themeDark;
-    background-color: #264653;
+    //background-color: #264653;
+    
+    //background: rgb(190,130,255);
+    //background: radial-gradient(circle, rgba(190,130,255,1) 0%, rgba(230,220,255,1) 100%);
+
+    background: ghostwhite;
     padding: 20px;
   }
 
@@ -27,14 +32,16 @@
   .title {
     // @include ms-font-xl;
     font-size: 1.9rem;
-    color: #adff2f;
+    //color: #adff2f;
+    color: #460073;
     text-align: center;
   }
 
   .subTitle {
     font-size: .9rem;
     //@include ms-font-l;
-    color: #adff2f;
+    //color: #adff2f;
+    color: #460073;
     text-align: center;
   }
 
@@ -86,5 +93,11 @@
         right: -17px
       }
     }
+  }
+  .ui.popup .content{
+    white-space: pre;
+  }
+  .ms-Callout-main .ms-Tooltip-content .ms-Tooltip-subtext {
+    white-space: pre;
   }
 }

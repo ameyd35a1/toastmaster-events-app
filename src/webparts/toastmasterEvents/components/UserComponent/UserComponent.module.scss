@@ -107,18 +107,21 @@
   .action {
     text-align: center;
     min-height: 44px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    .likeIcon {
-      padding-top: 5px;
-      cursor: pointer;
-    }
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    .likesCount {
-      padding: 2px;
-      font-size: .8rem;
+      .likeIcon {
+        padding-right: 5px;
+        cursor: pointer;
+      }
+
+      .likesCount {
+        padding: 2px;
+        font-size: .8rem;
+      }
     }
   }
 }

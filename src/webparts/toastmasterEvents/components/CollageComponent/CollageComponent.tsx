@@ -13,7 +13,7 @@ const CollageComponent: FC<ICollageComponentProps> = ({ content, handler }) => {
     //const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] = useBoolean(false);
     const [isPopup, setisPopup] = useState(true);
     const [setting, setSetting] = useState(null);
-    const defaultProfilePicUrl = config.defaultProfilePicUrl;
+    const defaultProfilePicUrl = config.DEFAULT_PROFILEPIC_URL;
     //const titleId = useId('title');
 
     useEffect(() => {

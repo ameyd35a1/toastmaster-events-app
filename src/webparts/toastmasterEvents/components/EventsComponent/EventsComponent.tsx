@@ -23,7 +23,7 @@ const EventsComponent: FC<IEventsComponentProps> = ({ event, categories }) => {
     return (
         <Fragment>
             <div className="">
-                <PrimaryButton onClick={() => setOpenModal(!openModal)} text='View Collage' />
+                <PrimaryButton className={styles.viewCollage} onClick={() => setOpenModal(!openModal)} text='View Collage' />
                 {openModal && <CollageComponent content={event} handler={handler} />}
             </div>
             <div className={styles.main}>

@@ -4,7 +4,6 @@ import { IToastmasterEventsProps } from './IToastmasterEventsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import MainComponent from './MainComponent/MainComponent';
 import DataContextProvider from '../../../common/DataContext';
-import 'semantic-ui-css/semantic.min.css'
 
 export default class ToastmasterEvents extends React.Component<IToastmasterEventsProps, {}> {
   public render(): React.ReactElement<IToastmasterEventsProps> {

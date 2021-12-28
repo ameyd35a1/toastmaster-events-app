@@ -12,6 +12,7 @@ import ToastmasterEvents from './components/ToastmasterEvents';
 import { IToastmasterEventsProps } from './components/IToastmasterEventsProps';
 import { initializeIcons } from 'office-ui-fabric-react';
 import AppContext from '../../common/AppContext';
+require('../../../node_modules/semantic-ui-css/semantic.min.css')
 
 export interface IToastmasterEventsWebPartProps {
   description: string;

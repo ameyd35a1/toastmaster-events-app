@@ -176,15 +176,17 @@ export const postLikes = async (client: SPHttpClient, url: string, action: strin
     })
         .then((response: SPHttpClientResponse) => {
             if (response.ok) {
-                return response.json().then((responseJSON) => {
-                    if (responseJSON != null) {
-                        if (action === 'update') {
-                            return responseJSON.Id
-                        } else {
-                            return ''
+                if (action !== 'delete') {
+                    return response.json().then((responseJSON) => {
+                        if (responseJSON != null) {
+                            if (action === 'update') {
+                                return responseJSON.Id
+                            } else {
+                                return ''
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
         })
 }
