@@ -44,7 +44,8 @@ const CommentsSectionComponent: FC<ICommentsSectionComponentProps> = ({ data, id
 
     const getReplies = (commentId: number) => comments.filter(e => e.parentId === commentId).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 
-    const postComment = async () => {
+    const postComment = async (e) => {
+        e.preventDefault();
         if (newComment.trim()) {
             const latestComment: IComment = {
                 userName: ctx.user,
@@ -92,12 +93,12 @@ const CommentsSectionComponent: FC<ICommentsSectionComponentProps> = ({ data, id
                             labelPosition: 'right',
                             icon: 'bolt',
                             content: 'Post',
-                            onClick: () => postComment()
+                            onClick: (e) => postComment(e)                            
                         }}
                         placeholder="Post a message..."
                         value={newComment}
                         onChange={e => setNewComment(e.target.value)}
-                        style={{ width: "500px" }}
+                        style={{ width: "500px" }}                        
                     />
                     {rootComments.map(e =>
                         <CommentsComponent comment={e} replies={getReplies(e.id)} handleReply={handleReply} />

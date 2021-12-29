@@ -38,7 +38,7 @@ const UserComponent: FC<IUserComponentProps> = ({ member, category }) => {
     const updateLike = async () => {
         //setLike('LikeSolid');
         if (!isLiked) {
-            if (likes.likes && likes.likes.length > 0) {
+            //if (likes.likes && likes.likes.length > 0) {
                 const currentUserLikeDetails = likes.likes.filter(e => e.member.toLowerCase() === member.email.toLowerCase() && e.category === category)
                 if (currentUserLikeDetails && currentUserLikeDetails.length > 0) {
                     currentUserLikeDetails[0].loggedInUser.push(ctx.email);
@@ -49,11 +49,12 @@ const UserComponent: FC<IUserComponentProps> = ({ member, category }) => {
                     likes.likes.push({ member: member.email, category: category, loggedInUser: [ctx.email], likeId: likeId });
                     likes.updates.push(likeId)
                 }
-            }
+            //}
         } else {
             const currentUserLikeDetails = likes.likes.filter(e => e.member.toLowerCase() === member.email.toLowerCase() && e.category === category)
             if (currentUserLikeDetails && currentUserLikeDetails.length === 1 && currentUserLikeDetails[0].loggedInUser.length === 1) {
                 //currentUserLikeDetails[0].loggedInUser = currentUserLikeDetails[0].loggedInUser.filter(e => e != ctx.email);
+                likes.likes = likes.likes.filter(e => e.member.toLowerCase() !== member.email.toLowerCase() && e.category !== category)
                 postLikes(ctx.client, ctx.webUrl, 'delete', currentUserLikeDetails[0].likeId, currentUserLikeDetails[0], likes.eventDate);
                 likes.updates.push(currentUserLikeDetails[0].likeId);
             } else {
@@ -67,7 +68,7 @@ const UserComponent: FC<IUserComponentProps> = ({ member, category }) => {
     }
 
     useEffect(() => {
-        if (likes.likes && likes.likes.length > 0) {
+        //if (likes.likes && likes.likes.length > 0) {
             const currentUserLikeDetails = likes.likes.filter(e => e.member.toLowerCase() === member.email.toLowerCase() && e.category === category)
             if (currentUserLikeDetails && currentUserLikeDetails.length > 0) {
                 if (currentUserLikeDetails[0].loggedInUser.indexOf(ctx.email) > -1) {
@@ -76,8 +77,11 @@ const UserComponent: FC<IUserComponentProps> = ({ member, category }) => {
                     setIsLiked(false);
                 }
                 setLikeNames(currentUserLikeDetails[0].loggedInUser);
+            } else {
+                setIsLiked(false);
+                setLikeNames([]);
             }
-        }
+        //}
     }, [likes, likes.updates])
 
     return (

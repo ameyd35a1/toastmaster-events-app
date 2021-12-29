@@ -30,7 +30,7 @@ const ReplyComponent:FC<IReplyComponentProps> = ({ reply, handleReply }) => {
                 {isReply &&
                     <Form reply>
                         <TextArea value={replyText} onChange={(x) => setReplyText(x.target.value)} rows={2} placeholder="Reply..." style={{ height:100 }} />
-                        <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={() => { setReplyText(''); setIsReply(false); return handleReply(replyText) }} />
+                        <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={(e) => { e.preventDefault(); setReplyText(''); setIsReply(false); return handleReply(replyText) }} />
                     </Form>
                 }
             </Comment>

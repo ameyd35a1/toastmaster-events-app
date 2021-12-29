@@ -3,7 +3,7 @@
   "solution": {
     "name": "ToastMasterEvents App",
     "id": "8a9e81e1-d6c6-4822-9715-99a379572cf1",
-    "version": "1.0.0.0",
+    "version": "1.0.1.0",
     "includeClientSideAssets": true,
     "isDomainIsolated": false,
     "developer": {
