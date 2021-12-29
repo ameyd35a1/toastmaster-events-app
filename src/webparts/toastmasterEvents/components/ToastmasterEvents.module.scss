@@ -88,9 +88,10 @@
 
 :global {
   div[class^="moreMembers"] {
-    div[class^="userComponent"] {      
+    div[class^="userComponent"] {
+      width: 145px;     
       div[class^="winner"] {
-        right: -17px
+        right: 0px
       }
     }
   }
