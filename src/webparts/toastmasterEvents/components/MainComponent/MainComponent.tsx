@@ -70,7 +70,7 @@ const MainComponent = () => {
     }
 
     const dropdownStyles: Partial<IDropdownStyles> = {
-        label: { color: "#460073" }
+        label: { color: "#460073", fontSize: "16px"},        
     };
 
     const spinnerStyle: Partial<ISpinnerStyles> = {
@@ -85,7 +85,7 @@ const MainComponent = () => {
                 :
                 <div>
                     <div className={styles.dropdown}>
-                        <Dropdown placeholder="Select Event Date" label="Toastmaster Events on" options={ddOptions} onChange={loadSelectedEvent} styles={dropdownStyles} />
+                        <Dropdown placeholder="Select Event Date" label="Toastmaster Event on" options={ddOptions} onChange={loadSelectedEvent} styles={dropdownStyles} />
                     </div>
                     {eventLoading
                         ? <Spinner size={SpinnerSize.large} label="Loading Event Details..." labelPosition="left" styles={spinnerStyle} />

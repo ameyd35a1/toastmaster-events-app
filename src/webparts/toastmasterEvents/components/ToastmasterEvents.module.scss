@@ -29,12 +29,24 @@
     width: 83.33% !important;
   }
 
+  .titleBg {
+    background: url(https://ts.accenture.com/sites/NEFS-ToastmastersClub/SiteAssets/Custom/Background/ACC_Gradient_Dark_9.jpg);
+    background-position: -250px -500px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: -15px;    
+  }
+
   .title {
     // @include ms-font-xl;
-    font-size: 1.9rem;
+    //font-size: 1.9rem;
     //color: #adff2f;
-    color: #460073;
+    //color: #460073;
     text-align: center;
+    font-size: 3rem;
+    color: white;
   }
 
   .subTitle {

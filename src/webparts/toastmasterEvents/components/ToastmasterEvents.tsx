@@ -12,12 +12,14 @@ export default class ToastmasterEvents extends React.Component<IToastmasterEvent
         <div className={styles.container}>
           <div className={styles.row}>
             {/* <div className={/*styles.column*/}
-            <div className={styles.title}>Toastmaster Events Page!</div>
-            <div className={styles.subTitle}>Events</div>
-            {/* <p className={ styles.description }>{escape(this.props.description)}</p>
+            <div className={styles.titleBg}>
+              <div className={styles.title}>Toastmaster Events</div>
+              {/* <div className={styles.subTitle}>Events</div> */}
+              {/* <p className={ styles.description }>{escape(this.props.description)}</p>
               <a href="https://aka.ms/spfx" className={ styles.button }>
                 <span className={ styles.label }>Learn more</span>
               </a> */}
+            </div>
             <DataContextProvider>
               <MainComponent />
             </DataContextProvider>
