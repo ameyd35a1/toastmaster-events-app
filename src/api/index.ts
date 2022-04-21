@@ -1,4 +1,5 @@
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http'
+import { Item } from 'semantic-ui-react';
 import { getTitleDate, paddingLeft } from '../utility';
 import { IComment, IEvent, IEventDropdownOption, IEventLikes, IEventLikesData, IEventMember, IEventWinner } from '../webparts/toastmasterEvents/Interfaces/IEvent';
 
@@ -22,7 +23,7 @@ export const getEventsDates = async (client: SPHttpClient, url: string): Promise
 
 export const getEventData = async (client: SPHttpClient, url: string, itemId: number): Promise<IEvent> => {
 
-    let requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterEvents')/items?$filter=ID eq " + itemId + "&$select=DateConductedOn,Comments,SAA/Title,SAA/Email,SAA/UserTypeCalc,SAA/ProfilePicUrl,TOD/Title,TOD/Email,TOD/UserTypeCalc,TOD/ProfilePicUrl,TTM/Title,TTM/Email,TTM/UserTypeCalc,TTM/ProfilePicUrl,GE/Title,GE/Email,GE/UserTypeCalc,GE/ProfilePicUrl,GMR/Title,GMR/Email,GMR/UserTypeCalc,GMR/ProfilePicUrl,AHC/Title,AHC/Email,AHC/UserTypeCalc,AHC/ProfilePicUrl,TMR/Title,TMR/Email,TMR/UserTypeCalc,TMR/ProfilePicUrl,PPS/Title,PPS/Email,PPS/UserTypeCalc,PPS/ProfilePicUrl,PPE/Title,PPE/Email,PPE/UserTypeCalc,PPE/ProfilePicUrl,TTS/Title,TTS/Email,TTS/UserTypeCalc,TTS/ProfilePicUrl&$expand=SAA,TOD,TTM,GE,GMR,AHC,TMR,PPS,PPE,TTS");
+    let requestUrl = url.concat("/_api/web/lists/getByTitle('ToastmasterEvents')/items?$filter=ID eq " + itemId + "&$select=DateConductedOn,Comments,TTH,PPSS,TTSS,SAA/Title,SAA/Email,SAA/UserTypeCalc,SAA/ProfilePicUrl,TOD/Title,TOD/Email,TOD/UserTypeCalc,TOD/ProfilePicUrl,TTM/Title,TTM/Email,TTM/UserTypeCalc,TTM/ProfilePicUrl,GE/Title,GE/Email,GE/UserTypeCalc,GE/ProfilePicUrl,GMR/Title,GMR/Email,GMR/UserTypeCalc,GMR/ProfilePicUrl,AHC/Title,AHC/Email,AHC/UserTypeCalc,AHC/ProfilePicUrl,TMR/Title,TMR/Email,TMR/UserTypeCalc,TMR/ProfilePicUrl,PPS/Title,PPS/Email,PPS/UserTypeCalc,PPS/ProfilePicUrl,PPE/Title,PPE/Email,PPE/UserTypeCalc,PPE/ProfilePicUrl,TTS/Title,TTS/Email,TTS/UserTypeCalc,TTS/ProfilePicUrl&$expand=SAA,TOD,TTM,GE,GMR,AHC,TMR,PPS,PPE,TTS");
     return await client.get(requestUrl, SPHttpClient.configurations.v1)
         .then((response: SPHttpClientResponse) => {
             if (response.ok) {
@@ -77,9 +78,12 @@ export const getEventData = async (client: SPHttpClient, url: string, itemId: nu
                             },
                             PPS: item.PPS.map(e => { return <IEventMember>{ name: e.Title, email: e.Email, userType: e.UserTypeCalc, profilePic: e.ProfilePicUrl } }),
                             PPE: item.PPE.map(e => { return <IEventMember>{ name: e.Title, email: e.Email, userType: e.UserTypeCalc, profilePic: e.ProfilePicUrl } }),
-                            TTS: item.TTS.map(e => { return <IEventMember>{ name: e.Title, email: e.Email, userType: e.UserTypeCalc, profilePic: e.ProfilePicUrl } })
+                            TTS: item.TTS.map(e => { return <IEventMember>{ name: e.Title, email: e.Email, userType: e.UserTypeCalc, profilePic: e.ProfilePicUrl } }),
+                            TTH: item.TTH,
+                            PPSS: item.PPSS ? item.PPSS.split(';'): null,
+                            TTSS: item.TTSS ? item.TTSS.split(';'): null
                         }
-                        console.log(responseJSON.value[0])
+                        //console.log(responseJSON.value[0])
                         return event;
 
                     }

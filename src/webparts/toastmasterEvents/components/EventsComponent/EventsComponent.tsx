@@ -1,5 +1,6 @@
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import React, { FC, Fragment, useEffect, useState } from 'react'
+import { Segment } from 'semantic-ui-react';
 import { useWebPartContext } from '../../../../hooks/useWebpartContext'
 import { IEvent, IEventLikes } from '../../Interfaces/IEvent';
 import CategoryAltComponent from '../CategoryAltComponent/CategoryAltComponent';
@@ -26,6 +27,9 @@ const EventsComponent: FC<IEventsComponentProps> = ({ event, categories }) => {
                 <PrimaryButton className={styles.viewCollage} onClick={() => setOpenModal(!openModal)} text='View Collage' />
                 {openModal && <CollageComponent content={event} handler={handler} />}
             </div>
+            <div>
+            {event.TTH && <Segment raised inverted color='purple'>{event.TTH}</Segment>}
+            </div>
             <div className={styles.main}>
                 {categories && event &&
                     <Fragment>
@@ -44,10 +48,10 @@ const EventsComponent: FC<IEventsComponentProps> = ({ event, categories }) => {
                         </div>
                         <div className={styles.one}>
                             {/* <CategoryComponent categoryTitle={categories.get("PS")} members={[...event.PPS, ...event.PPE]} /> */}
-                            <CategoryAltComponent categoryId="PS" categoryTitle={categories.get("PS")} members={[...event.PPS]} evaluaters={[...event.PPE]} />
+                            <CategoryAltComponent categoryId="PS" categoryTitle={categories.get("PS")} members={[...event.PPS]} evaluaters={[...event.PPE]} theme={[...event.PPSS]} />
                         </div>
                         <div className={styles.one}>
-                            <CategoryComponent categoryId="TTS" categoryTitle={categories.get("TTS")} members={[...event.TTS]} />
+                            <CategoryComponent categoryId="TTS" categoryTitle={categories.get("TTS")} members={[...event.TTS]} theme={[...event.TTSS]} />
                         </div>
                     </Fragment>
                 }

@@ -90,7 +90,7 @@ const MainComponent = () => {
                     {eventLoading
                         ? <Spinner size={SpinnerSize.large} label="Loading Event Details..." labelPosition="left" styles={spinnerStyle} />
                         : event &&
-                        <div>
+                        <div>                            
                             <EventsComponent event={event} categories={categories} />
                             <Separator />
                             <CommentsSectionComponent data={event.comments} id={event.id} />

@@ -34,7 +34,7 @@
     "scriptResources": {
       "toastmaster-events-web-part": {
         "type": "path",
-        "path": "toastmaster-events-web-part_a469c6c87194a808e9ab.js"
+        "path": "toastmaster-events-web-part_e2d4baab881897cb40ef.js"
       },
       "@microsoft/sp-property-pane": {
         "type": "component",

@@ -11,7 +11,10 @@ export interface IEvent {
     TMR: IEventMember,
     PPS: IEventMember[],
     PPE: IEventMember[],
-    TTS: IEventMember[]
+    TTS: IEventMember[],
+    TTH?: string,
+    PPSS?: string[],
+    TTSS?: string[],
 }
 
 export interface IEventMember {
